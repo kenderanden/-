@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ЭкзаменModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Individuals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="INN" Type="nvarchar(max)" />
+          <Property Name="Surname" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Patronymic" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="idManager" Type="int" />
+        </EntityType>
+        <EntityType Name="LegalEntities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="INN" Type="nvarchar(max)" />
+          <Property Name="ShortName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="idManager" Type="int" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Patronymic" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Type" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Individuals_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="Individuals" Type="Self.Individuals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Individuals">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LegalEntities_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="LegalEntities" Type="Self.LegalEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LegalEntities">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ЭкзаменModelContainer">
+          <EntitySet Name="Individuals" EntityType="Self.Individuals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LegalEntities" EntityType="Self.LegalEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Individuals_Manager" Association="Self.FK_Individuals_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="Individuals" EntitySet="Individuals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LegalEntities_Manager" Association="Self.FK_LegalEntities_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="LegalEntities" EntitySet="LegalEntities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ЭкзаменModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Individuals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="INN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idManager" Type="Int32" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK_Individuals_Manager" FromRole="Individuals" ToRole="Manager" />
+        </EntityType>
+        <EntityType Name="LegalEntities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="INN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idManager" Type="Int32" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK_LegalEntities_Manager" FromRole="LegalEntities" ToRole="Manager" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Individuals" Relationship="Self.FK_Individuals_Manager" FromRole="Manager" ToRole="Individuals" />
+          <NavigationProperty Name="LegalEntities" Relationship="Self.FK_LegalEntities_Manager" FromRole="Manager" ToRole="LegalEntities" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Individuals_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="Individuals" Type="Self.Individuals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Individuals">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LegalEntities_Manager">
+          <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="LegalEntities" Type="Self.LegalEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LegalEntities">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ЭкзаменEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Individuals" EntityType="Self.Individuals" />
+          <EntitySet Name="LegalEntities" EntityType="Self.LegalEntities" />
+          <EntitySet Name="Manager" EntityType="Self.Manager" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Individuals_Manager" Association="Self.FK_Individuals_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="Individuals" EntitySet="Individuals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LegalEntities_Manager" Association="Self.FK_LegalEntities_Manager">
+            <End Role="Manager" EntitySet="Manager" />
+            <End Role="LegalEntities" EntitySet="LegalEntities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ЭкзаменModelContainer" CdmEntityContainer="ЭкзаменEntities">
+          <EntitySetMapping Name="Individuals">
+            <EntityTypeMapping TypeName="ЭкзаменModel.Individuals">
+              <MappingFragment StoreEntitySet="Individuals">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="idManager" ColumnName="idManager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LegalEntities">
+            <EntityTypeMapping TypeName="ЭкзаменModel.LegalEntities">
+              <MappingFragment StoreEntitySet="LegalEntities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="idManager" ColumnName="idManager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manager">
+            <EntityTypeMapping TypeName="ЭкзаменModel.Manager">
+              <MappingFragment StoreEntitySet="Manager">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ЭкзаменModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
